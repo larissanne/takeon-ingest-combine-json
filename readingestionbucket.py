@@ -3,8 +3,9 @@ import boto3
 import os
 import random
 import glob
-
+import requests
 from boto3 import client
+from botocore.vendored.requests.api import request
 
 
 bucket = os.getenv('INGEST_ZONE_BUCKET')
@@ -54,4 +55,6 @@ def run_process():
   json_output=read_file(file)
   concatinate_json.append(combine_data(json.loads(json_output)))
 
- print(concatinate_json)  
+ print(concatinate_json)
+
+  

@@ -1,0 +1,134 @@
+{
+  "service": {
+    "service": "combineJSONIngest",
+    "serviceObject": {
+      "name": "combineJSONIngest"
+    },
+    "provider": {
+      "stage": "main",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._@'\",\\-\\/\\(\\)*?]+?)}",
+      "name": "aws",
+      "vpc": {
+        "securityGroupIds": [
+          "sg-06fc64d77bd38bea1"
+        ],
+        "subnetIds": [
+          "subnet-0cbc63301c37a86ca"
+        ]
+      },
+      "runtime": "python3.7",
+      "region": "eu-west-2",
+      "deploymentBucket": "takeon.validation.deployment",
+      "versionFunctions": true,
+      "remoteFunctionData": null,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "MainLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/combineJSONIngest-main-main"
+            }
+          },
+          "MainLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "takeon.validation.deployment",
+                "S3Key": "serverless/combineJSONIngest/main/1575982914709-2019-12-10T13:01:54.709Z/combineJSONIngest.zip"
+              },
+              "FunctionName": "combineJSONIngest-main-main",
+              "Handler": "handler.lambda_handler",
+              "MemorySize": 512,
+              "Role": "arn:aws:iam::014669633018:role/Take-On-Service",
+              "Runtime": "python3.7",
+              "Timeout": 30,
+              "Environment": {
+                "Variables": {
+                  "INGEST_ZONE_BUCKET": "takeon-ingestion-ingest-zone-bucket",
+                  "INGEST_ZONE_QUEUE": "https://sqs.eu-west-2.amazonaws.com/014669633018/takeon-ingestion-IngestZone",
+                  "ERROR_QUEUE_URL": "https://sqs.eu-west-2.amazonaws.com/014669633018/TakeOn-Validation-HandledErrors",
+                  "BUSINESS_LAYER_ENDPOINT": "http://a8f1926bdf1c111e9a5a70a6b6f05390-484c09026fdfe776.elb.eu-west-2.amazonaws.com:8088/response/saveBatchResponses/"
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-06fc64d77bd38bea1"
+                ],
+                "SubnetIds": [
+                  "subnet-0cbc63301c37a86ca"
+                ]
+              },
+              "Layers": [
+                "arn:aws:lambda:eu-west-2:014669633018:layer:takeon-python-layer:2"
+              ]
+            },
+            "DependsOn": [
+              "MainLogGroup"
+            ]
+          },
+          "MainLambdaVersionjR2GxWfMpODR4yd1j9ntWSLQgsW85WdQ3ksEs68": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "MainLambdaFunction"
+              },
+              "CodeSha256": "HiNv5kZp9nUZyjtpU2u9be5NuJ8smEvqeqNqJP/Sj78="
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "takeon.validation.deployment"
+          },
+          "MainLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "MainLambdaVersionjR2GxWfMpODR4yd1j9ntWSLQgsW85WdQ3ksEs68"
+            }
+          }
+        }
+      }
+    },
+    "pluginsData": {},
+    "functions": {
+      "main": {
+        "handler": "handler.lambda_handler",
+        "role": "arn:aws:iam::014669633018:role/Take-On-Service",
+        "environment": {
+          "INGEST_ZONE_BUCKET": "takeon-ingestion-ingest-zone-bucket",
+          "INGEST_ZONE_QUEUE": "https://sqs.eu-west-2.amazonaws.com/014669633018/takeon-ingestion-IngestZone",
+          "ERROR_QUEUE_URL": "https://sqs.eu-west-2.amazonaws.com/014669633018/TakeOn-Validation-HandledErrors",
+          "BUSINESS_LAYER_ENDPOINT": "http://a8f1926bdf1c111e9a5a70a6b6f05390-484c09026fdfe776.elb.eu-west-2.amazonaws.com:8088/response/saveBatchResponses/"
+        },
+        "vpc": {
+          "securityGroupIds": [
+            "sg-06fc64d77bd38bea1"
+          ],
+          "subnetIds": [
+            "subnet-0cbc63301c37a86ca"
+          ]
+        },
+        "timeout": 30,
+        "memorySize": 512,
+        "layers": [
+          "arn:aws:lambda:eu-west-2:014669633018:layer:takeon-python-layer:2"
+        ],
+        "events": [],
+        "name": "combineJSONIngest-main-main",
+        "package": {},
+        "memory": 512,
+        "runtime": "python3.7"
+      }
+    },
+    "serviceFilename": "serverless.yml",
+    "layers": {},
+    "artifact": "/Users/larissa/Desktop/git_repo/takeon-ingest-combine-json/.serverless/combineJSONIngest.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/combineJSONIngest/main/1575982914709-2019-12-10T13:01:54.709Z",
+    "artifact": "combineJSONIngest.zip"
+  }
+}
